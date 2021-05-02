@@ -11,9 +11,7 @@ public class Main {
 		Menu m = new Menu();
 		try {
 			m.startProgram();
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (NumberFormatException | IOException e) {
 			e.printStackTrace();
 		}
 	}//End main
