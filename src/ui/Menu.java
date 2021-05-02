@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import model.Grid;
+import model.Player;
+
 public class Menu {
 	
 	private final static int START = 1;
@@ -11,6 +14,9 @@ public class Menu {
 	private final static int EXIT = 3;
 	
 	private BufferedReader br;
+	
+	Grid grid;
+	Player player;
 	
 	public Menu() {
 		br = new BufferedReader(new InputStreamReader(System.in));
