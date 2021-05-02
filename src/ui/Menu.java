@@ -4,8 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import model.Grid;
-import model.Player;
+import model.Board;
+
 
 public class Menu {
 	
@@ -15,8 +15,7 @@ public class Menu {
 	
 	private BufferedReader br;
 	
-	Grid grid;
-	Player player;
+	Board board;
 	
 	public Menu() {
 		br = new BufferedReader(new InputStreamReader(System.in));
