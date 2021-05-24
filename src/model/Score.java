@@ -12,11 +12,8 @@ public class Score {
 	private Score left;
 	
 	
-	public Score(Player player, int score, String parameters, String playersSymbols) {
-		this.player = player;
-		this.score = score;
-		this.parameters = parameters;
-		this.playersSymbols = playersSymbols;
+	public Score() {
+	
 	}
 
 

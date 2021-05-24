@@ -8,6 +8,9 @@ public class Player {
 	private Player nextPlayerInGrid;
 	private Player prevPlayerInGrid;
 	private Grid positionInGrid;
+	private Player rigth;
+	private Player left;
+	private int movementsOfPlayer;
 	
 	
 	public Player(String symbol, Grid position) {
@@ -63,6 +66,36 @@ public class Player {
 
 	public void setPositionInGrid(Grid positionInGrid) {
 		this.positionInGrid = positionInGrid;
+	}
+
+
+	public Player getRigth() {
+		return rigth;
+	}
+
+
+	public void setRigth(Player rigth) {
+		this.rigth = rigth;
+	}
+
+
+	public Player getLeft() {
+		return left;
+	}
+
+
+	public void setLeft(Player left) {
+		this.left = left;
+	}
+
+
+	public int getMovementsOfPlayer() {
+		return movementsOfPlayer;
+	}
+
+
+	public void setMovementsOfPlayer(int movementsOfPlayer) {
+		this.movementsOfPlayer = movementsOfPlayer;
 	}
 	
 	
