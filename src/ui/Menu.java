@@ -10,7 +10,7 @@ import model.Board;
 public class Menu {
 	
 	private final static int START = 1;
-	private final static int SHOW = 2;
+//	private final static int SHOW = 2;
 	private final static int EXIT = 3;
 	
 	private BufferedReader br;
@@ -33,6 +33,23 @@ public class Menu {
 		return option;
 	}
 	
+	public void doOperation(int n) {
+		try {
+			int num = readOption();
+			if(num==START) {
+				board = new Board(3,4);
+				System.out.println(board);
+			}
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public void startProgram() throws NumberFormatException, IOException  {
 		showMenu();
 		int option = readOption();
@@ -44,6 +61,7 @@ public class Menu {
 			showMenu();
 			try {
 				option = readOption();
+				doOperation(option);
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
