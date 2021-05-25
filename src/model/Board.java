@@ -8,17 +8,18 @@ public class Board {
 	Player firstPlayer;
 	private Player playerWinner;
 	private String creationParameters;
-	
-	
-	public Board(int m, int n) {
+		
+
+	public Board() {
+		
+	}
+
+	public void createMatrix(int m, int n) {	
 		numRows = m;
 		numCols = n;
 		firstGrid = new Grid(0,0,1);
 		createRow(0, 0, firstGrid);
 	}
-
-//	public void createMatrix() {	
-//	}
 	
 	private void createRow(int i, int j, Grid currentFirstRow) {
 		createCol(i,j+1,currentFirstRow,currentFirstRow.getUp());
@@ -147,7 +148,7 @@ public class Board {
 	}
 	
 	public void createGameWithPlayersSymbol(int rows, int columns, int snakes, int 	ladders, String symbol) {
-//		 createMatrix(rows, columns);
+		createMatrix(rows, columns);
 		 //generateSnakkes(snakes);
 		 //generateLadders(ladders);
 		 addPlayerInBoard(symbol, 0 );
@@ -157,7 +158,7 @@ public class Board {
 	public void createGameWithAmountPlayers(int rows, int columns, int snakes, int ladders, int amountPlayers) {
 		String symbolsOfPlayers = "*!OX%$#+&";
 		String creationPlayersWithSymbol = symbolsOfPlayers.substring(0,amountPlayers);
-//		createMatrix(rows, columns);
+		createMatrix(rows, columns);
 		//generateSnakkes(snakes);
 		//generateLadders(ladders);
 		addPlayerInBoard(creationPlayersWithSymbol, 0 );

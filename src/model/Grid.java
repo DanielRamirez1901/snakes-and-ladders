@@ -30,7 +30,6 @@ public class Grid {
 	
 
 	public String getPlayersInGridWithSymbols() {
-
 		symbolPlayerInGrid =  new String();
 		currentSymbolPlayers(currentPlayer);
 		return symbolPlayerInGrid;
@@ -52,15 +51,16 @@ public class Grid {
 			addMorePlayers(currentPlayer, playerToAdd);
 		}
 	}
+	
 	private void addMorePlayers(Player current, Player playerToAdd) {
 		if(current.getnext()==null) {
 			current.setnext(playerToAdd);
-			playerToAdd.setprev(playerToAdd);
+			playerToAdd.setprev(current);
 		}else {
-			addMorePlayers(current.getnext(), playerToAdd);
+			addMorePlayers(current, playerToAdd);
 		}
-		
 	}
+	
 	public void deleteAPlayer(Player playerToDelete) {
 		Player youNeedToGetOut;
 		if(currentPlayer == playerToDelete) {	

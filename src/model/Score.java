@@ -10,17 +10,11 @@ public class Score {
 	private Score parent;
 	private Score right;
 	private Score left;
-	
-	
-	
-
 
 	public Score(Player player, int score) {
-		super();
 		this.player = player;
 		this.score = score;
 	}
-
 
 	public Player getPlayer() {
 		return player;
