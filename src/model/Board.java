@@ -7,19 +7,23 @@ public class Board {
 	Grid firstGrid;
 	Player firstPlayer;
 	private Player playerWinner;
+	private String creationParameters;
 	
 	
-	public Board(int m, int n) {	
+	public Board(int m, int n) {
 		numRows = m;
 		numCols = n;
 		firstGrid = new Grid(0,0,1);
-		createRow(0,0,firstGrid);
+		createRow(0, 0, firstGrid);
 	}
 
+//	public void createMatrix() {	
+//	}
+	
 	private void createRow(int i, int j, Grid currentFirstRow) {
 		createCol(i,j+1,currentFirstRow,currentFirstRow.getUp());
 		if(i+1<numRows) {
-			int num = currentFirstRow.getGridNumber();
+			int num = ((currentFirstRow.getRow()+1)%2!=0) ? ((currentFirstRow.getRow()+2)*numCols):(((currentFirstRow.getRow()+1)*numCols)+1);
 			Grid downFirstRow = new Grid(i+1,j,num);
 			downFirstRow.setUp(currentFirstRow);
 			currentFirstRow.setDown(downFirstRow);
@@ -29,19 +33,25 @@ public class Board {
 
 	private void createCol(int i, int j, Grid prev, Grid rowPrev) {
 		if(j<numCols) {
-			int num = prev.getGridNumber();		
-			Grid current = new Grid(i,j,num+1);//n-1
-			current.setLeft(prev);
-			prev.setRight(current);
+			int num = ((prev.getRow()+1)%2==0) ? (prev.getGridNumber()-1): (prev.getGridNumber()+1);
+			Grid current = new Grid(i,j,num);//n-1
+			current.setprev(prev);
+			prev.setNext(current);
 			if(rowPrev!=null) {
-				rowPrev = rowPrev.getRight();
+				rowPrev = rowPrev.getNext();
 				current.setUp(rowPrev);
 				rowPrev.setDown(current);
 			}
 			createCol(i,j+1,current,rowPrev);
 		}
 	}
-
+	
+	public void movePlayer(Player player,int steps) {
+		
+	}
+	
+	//mover hacia la cola de serpiente
+	//mover hacia la parte de arriba de escalera
 	
 	public void addPlayerInBoard(String symbol, int numOfPlayers) {
 		if(numOfPlayers<symbol.length()) {
@@ -55,19 +65,18 @@ public class Board {
 	public void addOnePlayer(String symbol) {
 		if(firstPlayer == null) {
 			firstPlayer = new Player(symbol,firstGrid);
-			firstPlayer.setRigth(firstPlayer);
-			firstPlayer.setLeft(firstPlayer);
+			firstPlayer.setnext(firstPlayer);
+			firstPlayer.setprev(firstPlayer);
 			firstGrid.addFirstPlayer(firstPlayer);
 		}else {
 			 Player playerToAdd = new Player(symbol, firstGrid);
-			 firstPlayer.getLeft().setRigth(playerToAdd);
-			 playerToAdd.setLeft(firstPlayer.getLeft());
-			 firstPlayer.setLeft(playerToAdd);
-			 playerToAdd.setRigth(firstPlayer);
+			 firstPlayer.getprev().setnext(playerToAdd);
+			 playerToAdd.setprev(firstPlayer.getprev());
+			 firstPlayer.setprev(playerToAdd);
+			 playerToAdd.setnext(firstPlayer);
 			 firstGrid.addFirstPlayer(playerToAdd);
 		}
 	}
-	
 	
 	public String showWinnerInformation() {
 		 String winnerInfo;
@@ -79,6 +88,23 @@ public class Board {
 	        return winnerInfo;
 	}
 	
+	public void createGameWithPlayersSymbol(int rows, int columns, int snakes, int 	ladders, String symbol) {
+//		 createMatrix(rows, columns);
+		 //generateSnakkes(snakes);
+		 //generateLadders(ladders);
+		 addPlayerInBoard(symbol, 0 );
+		
+	}
+	
+	public void createGameWithAmountPlayers(int rows, int columns, int snakes, int ladders, int amountPlayers) {
+		String symbolsOfPlayers = "*!OX%$#+&";
+		String creationPlayersWithSymbol = symbolsOfPlayers.substring(0,amountPlayers);
+//		createMatrix(rows, columns);
+		//generateSnakkes(snakes);
+		//generateLadders(ladders);
+		addPlayerInBoard(creationPlayersWithSymbol, 0 );
+	} 
+
 	public int getNumRows() {
 		return numRows;
 	}
@@ -104,6 +130,30 @@ public class Board {
 		this.firstGrid = firstGrid;
 	}
 	
+	public Player getFirstPlayer() {
+		return firstPlayer;
+	}
+
+	public void setFirstPlayer(Player firstPlayer) {
+		this.firstPlayer = firstPlayer;
+	}
+
+	public Player getPlayerWinner() {
+		return playerWinner;
+	}
+
+	public void setPlayerWinner(Player playerWinner) {
+		this.playerWinner = playerWinner;
+	}
+
+	public String getCreationParameters() {
+		return creationParameters;
+	}
+
+	public void setCreationParameters(String creationParameters) {
+		this.creationParameters = creationParameters;
+	}
+
 	public String toString() {
 		String msg;
 		msg = toStringRow(firstGrid);
@@ -113,8 +163,8 @@ public class Board {
 	private String toStringRow(Grid firstRow) {
 		String msg = "";
 		if(firstRow!=null) {
-		msg = toStringCol(firstRow) + "\n";
-		msg += toStringRow(firstRow.getDown());
+		msg = toStringCol(firstRow);
+		msg = toStringRow(firstRow.getDown())+"\n"+msg;
 		}
 		return msg;
 	}
@@ -123,7 +173,7 @@ public class Board {
 		String msg = "";
 		if(current!=null) {
 		msg += current.toString();
-		msg += toStringCol(current.getRight());
+		msg += toStringCol(current.getNext());
 		}
 		return msg;
 	}

@@ -5,11 +5,9 @@ public class Player {
 	private String nickname;
 	private int score;
 	private String symbol;
-	private Player nextPlayerInGrid;
-	private Player prevPlayerInGrid;
 	private Grid positionInGrid;
-	private Player rigth;
-	private Player left;
+	private Player next;
+	private Player prev;
 	private int movementsOfPlayer;
 	
 	
@@ -38,27 +36,6 @@ public class Player {
 		this.symbol = symbol;
 	}
 
-
-	public Player getNextPlayerInGrid() {
-		return nextPlayerInGrid;
-	}
-
-
-	public void setNextPlayerInGrid(Player nextPlayerInGrid) {
-		this.nextPlayerInGrid = nextPlayerInGrid;
-	}
-
-
-	public Player getPrevPlayerInGrid() {
-		return prevPlayerInGrid;
-	}
-
-
-	public void setPrevPlayerInGrid(Player prevPlayerInGrid) {
-		this.prevPlayerInGrid = prevPlayerInGrid;
-	}
-
-
 	public Grid getPositionInGrid() {
 		return positionInGrid;
 	}
@@ -69,23 +46,23 @@ public class Player {
 	}
 
 
-	public Player getRigth() {
-		return rigth;
+	public Player getnext() {
+		return next;
 	}
 
 
-	public void setRigth(Player rigth) {
-		this.rigth = rigth;
+	public void setnext(Player next) {
+		this.next = next;
 	}
 
 
-	public Player getLeft() {
-		return left;
+	public Player getprev() {
+		return prev;
 	}
 
 
-	public void setLeft(Player left) {
-		this.left = left;
+	public void setprev(Player prev) {
+		this.prev = prev;
 	}
 
 

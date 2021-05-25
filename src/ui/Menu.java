@@ -37,7 +37,7 @@ public class Menu {
 		try {
 			int num = readOption();
 			if(num==START) {
-				board = new Board(3,4);
+				board = new Board(5,5);
 				System.out.println(board);
 			}
 		} catch (NumberFormatException e) {

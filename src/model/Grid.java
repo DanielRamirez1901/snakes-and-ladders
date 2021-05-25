@@ -4,11 +4,15 @@ public class Grid {
 	private int number;
 	private Grid up;
 	private Grid down;
-	private Grid left;
-	private Grid right;
+	private Grid prev;
+	private Grid next;
 	private int row;
 	private int col;
 	private int gridNumber;
+	private String headSnake;
+	private String tailSnake;
+	private String topLadder;
+	private String botLadder;
 	
 	private String symbolPlayerInGrid;
 	private Player currentPlayer;
@@ -35,27 +39,59 @@ public class Grid {
 	public void currentSymbolPlayers(Player cPlayer) {
 		if(cPlayer!=null) {
 			symbolPlayerInGrid += cPlayer.getSymbol();
-			currentSymbolPlayers(cPlayer.getNextPlayerInGrid());
+			currentSymbolPlayers(cPlayer.getnext());
 		}
 	}
 	
 	public void addFirstPlayer(Player playerToAdd) {
 		if(currentPlayer == null) {
 			currentPlayer =  playerToAdd;
+			currentPlayer.setnext(currentPlayer);
 		}else {
 			addMorePlayers(currentPlayer, playerToAdd);
 		}
 	}
 	private void addMorePlayers(Player current, Player playerToAdd) {
-		if(current.getNextPlayerInGrid()==null) {
-			current.setNextPlayerInGrid(playerToAdd);
-			playerToAdd.setPrevPlayerInGrid(playerToAdd);
+		if(current.getnext()==null) {
+			current.setnext(playerToAdd);
+			playerToAdd.setprev(playerToAdd);
 		}else {
-			addMorePlayers(current.getNextPlayerInGrid(), playerToAdd);
+			addMorePlayers(current.getnext(), playerToAdd);
 		}
 		
 	}
+	public void deleteAPlayer(Player playerToDelete) {
+		Player youNeedToGetOut;
+		if(currentPlayer == playerToDelete) {	
+			currentPlayer = currentPlayer.getnext();
+			}if(currentPlayer!=null) {
+			youNeedToGetOut = playerToDelete;
+			youNeedToGetOut.setnext(null);
+		}else if (currentPlayer!=null) {
+			deleteAPlayer(currentPlayer.getnext(),playerToDelete);
+		}
+	}
+	
+	private void deleteAPlayer(Player actual, Player playerToDelete) {
+		if(actual == playerToDelete) {
+			Player tempPlayerToRemove = actual;
+			Player newNextPlayer = actual.getnext();
+			Player newPrevPlayer = actual.getprev();
+			newPrevPlayer.setnext(actual.getnext());
+			if(newNextPlayer!=null) {
+				newNextPlayer.setprev(actual.getprev());
+			}
+			tempPlayerToRemove.setprev(null);
+			tempPlayerToRemove.setnext(null);
+		}
+		else {
+			deleteAPlayer(actual.getnext(),playerToDelete);
+		}	
+	}
 
+	public boolean gridAreEmpty() {
+		return (next == null && down == null && up == null && prev == null);
+	}
 
 	public int getRow() {
 		return row;
@@ -93,20 +129,20 @@ public class Grid {
 		this.down = down;
 	}
 
-	public Grid getLeft() {
-		return left;
+	public Grid getprev() {
+		return prev;
 	}
 
-	public void setLeft(Grid left) {
-		this.left = left;
+	public void setprev(Grid prev) {
+		this.prev = prev;
 	}
 
-	public Grid getRight() {
-		return right;
+	public Grid getNext() {
+		return next;
 	}
 
-	public void setRight(Grid right) {
-		this.right = right;
+	public void setNext(Grid next) {
+		this.next = next;
 	}
 
 	public boolean isOcupated() {
@@ -152,6 +188,46 @@ public class Grid {
 
 	public void setCurrentPlayer(Player currentPlayer) {
 		this.currentPlayer = currentPlayer;
+	}
+	
+	
+	public String getHeadSnake() {
+		return headSnake;
+	}
+
+
+	public void setHeadSnake(String headSnake) {
+		this.headSnake = headSnake;
+	}
+
+
+	public String getTailSnake() {
+		return tailSnake;
+	}
+
+
+	public void setTailSnake(String tailSnake) {
+		this.tailSnake = tailSnake;
+	}
+
+
+	public String getTopLadder() {
+		return topLadder;
+	}
+
+
+	public void setTopLadder(String topLadder) {
+		this.topLadder = topLadder;
+	}
+
+
+	public String getBotLadder() {
+		return botLadder;
+	}
+
+
+	public void setBotLadder(String botLadder) {
+		this.botLadder = botLadder;
 	}
 
 
