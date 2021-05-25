@@ -12,8 +12,13 @@ public class Score {
 	private Score left;
 	
 	
-	public Score() {
 	
+
+
+	public Score(Player player, int score) {
+		super();
+		this.player = player;
+		this.score = score;
 	}
 
 

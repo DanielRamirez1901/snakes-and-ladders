@@ -47,6 +47,7 @@ public class Grid {
 		if(currentPlayer == null) {
 			currentPlayer =  playerToAdd;
 			currentPlayer.setnext(currentPlayer);
+			currentPlayer.setprev(currentPlayer);
 		}else {
 			addMorePlayers(currentPlayer, playerToAdd);
 		}

@@ -46,8 +46,64 @@ public class Board {
 		}
 	}
 	
-	public void movePlayer(Player player,int steps) {
-		
+	public void movePlayerToNext(Player player,int steps) {
+		if(steps==0) {
+			firstGrid.setNext(firstGrid);
+			if(firstGrid.getNext()!=null) {
+				if(firstGrid.getRow()%2!=0) {
+					Player temporal = player;
+					Grid gridWithPlayer = firstGrid;
+					firstGrid.addFirstPlayer(player);
+					gridWithPlayer.setNext(firstGrid);
+					firstGrid.deleteAPlayer(temporal);
+					//firstGrid.moveInSnake
+					//firstGrid.moveInLadder
+					//firstGrid.movePlayerInPrev
+				}
+			}if(firstGrid.getNext()==null) {
+				firstGrid.setUp(firstGrid);
+				Player temporal = player;
+				firstGrid.addFirstPlayer(player);
+				if(firstGrid.getRow()%2==0) {
+					Grid temporalGrid =  firstGrid;
+					firstGrid.setDown(temporalGrid);
+					temporalGrid.deleteAPlayer(temporal);
+					movePlayerToPrev(player, steps);
+				}
+			}
+		}else {
+			movePlayerToNext(player,steps-1);
+		}
+	}
+	
+	public void movePlayerToPrev(Player player, int steps) {
+		if(steps<0) {
+			firstGrid.setprev(firstGrid);
+			if(firstGrid.getprev()!=null) {
+				if(firstGrid.getRow()%2==0) {
+					Player temporal = player;
+					Grid gridWithPlayer = firstGrid;
+					firstGrid.addFirstPlayer(player);
+					gridWithPlayer.setprev(firstGrid);
+					firstGrid.deleteAPlayer(temporal);
+					//firstGrid.moveInSnake
+					//firstGrid.moveInLadder
+					//firstGrid.movePlayerInPrev
+				}
+			}if(firstGrid.getNext()==null) {
+				firstGrid.setUp(firstGrid);
+				firstGrid.addFirstPlayer(player);
+				Player temporal = player;
+				if(firstGrid.getRow()%2!=0) {
+					Grid temporalGrid = firstGrid;
+					firstGrid.setDown(temporalGrid);
+					temporalGrid.deleteAPlayer(temporal);
+					movePlayerToNext(player, steps);
+				}
+			}
+		}else {
+			movePlayerToNext(player,steps-1);
+		}
 	}
 	
 	//mover hacia la cola de serpiente
@@ -77,6 +133,8 @@ public class Board {
 			 firstGrid.addFirstPlayer(playerToAdd);
 		}
 	}
+	
+	
 	
 	public String showWinnerInformation() {
 		 String winnerInfo;
