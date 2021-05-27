@@ -8,8 +8,6 @@ public class Player {
 	private Grid positionInGrid;
 	private Player next;
 	private Player prev;
-	private Player nextInGrid;
-	private Player prevInGrid;
 	private int movementsOfPlayer;
 	
 	
@@ -18,6 +16,9 @@ public class Player {
 		positionInGrid = position;
 	}
 	
+	public int getNumberOfPosition() {
+		return positionInGrid.getGridNumber();
+	}
 	
 	public String getNickname() {
 		return nickname;
@@ -76,48 +77,8 @@ public class Player {
 	public void setMovementsOfPlayer(int movementsOfPlayer) {
 		this.movementsOfPlayer = movementsOfPlayer;
 	}
-
-
-	public Player getNext() {
-		return next;
-	}
-
-
-	public void setNext(Player next) {
-		this.next = next;
-	}
-
-
-	public Player getPrev() {
-		return prev;
-	}
-
-
-	public void setPrev(Player prev) {
-		this.prev = prev;
-	}
-
-
-	public Player getNextInGrid() {
-		return nextInGrid;
-	}
-
-
-	public void setNextInGrid(Player nextInGrid) {
-		this.nextInGrid = nextInGrid;
-	}
-
-
-	public Player getPrevInGrid() {
-		return prevInGrid;
-	}
-
-
-	public void setPrevInGrid(Player prevInGrid) {
-		this.prevInGrid = prevInGrid;
-	}
-	
 	
 	
 
 }
+
