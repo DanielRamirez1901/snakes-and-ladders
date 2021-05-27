@@ -38,26 +38,24 @@ public class Grid {
 	public void currentSymbolPlayers(Player cPlayer) {
 		if(cPlayer!=null) {
 			symbolPlayerInGrid += cPlayer.getSymbol();
-			currentSymbolPlayers(cPlayer.getnext());
+			currentSymbolPlayers(cPlayer.getNextInGrid());
 		}
 	}
 	
 	public void addFirstPlayer(Player playerToAdd) {
 		if(currentPlayer == null) {
 			currentPlayer =  playerToAdd;
-			currentPlayer.setnext(currentPlayer);
-			currentPlayer.setprev(currentPlayer);
 		}else {
 			addMorePlayers(currentPlayer, playerToAdd);
 		}
 	}
 	
 	private void addMorePlayers(Player current, Player playerToAdd) {
-		if(current.getnext()==null) {
-			current.setnext(playerToAdd);
-			playerToAdd.setprev(current);
+		if(current.getNextInGrid()==null) {
+			current.setNextInGrid(playerToAdd);
+			playerToAdd.setPrevInGrid(current);
 		}else {
-			addMorePlayers(current, playerToAdd);
+			addMorePlayers(current.getNextInGrid(), playerToAdd);
 		}
 	}
 	
@@ -233,6 +231,6 @@ public class Grid {
 
 
 	public String toString() {
-		return "["+gridNumber+"]";
+		return "["+gridNumber+" "+getPlayersInGridWithSymbols()+"]";
 	}
 }

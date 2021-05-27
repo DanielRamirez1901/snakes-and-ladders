@@ -21,6 +21,7 @@ public class Menu {
 
     public Menu() {
         br = new BufferedReader(new InputStreamReader(System.in));
+        board = new Board();
     }
 
     public void showMenu() {
@@ -38,7 +39,6 @@ public class Menu {
         try {
             int num = readOption();
             if (num == START) {
-                board = new Board(3, 4);
                 System.out.println(board);
             }
         } catch (NumberFormatException | IOException e) {
@@ -154,4 +154,5 @@ public class Menu {
 
         br.close();
     }
+
 }

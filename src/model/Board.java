@@ -11,13 +11,12 @@ public class Board {
 		
 
 	public Board() {
-		
+		firstGrid = new Grid(0,0,1);
 	}
 
-	public void createMatrix(int m, int n) {	
+	public void createMatrix(int n, int m) {	
 		numRows = m;
 		numCols = n;
-		firstGrid = new Grid(0,0,1);
 		createRow(0, 0, firstGrid);
 	}
 	
