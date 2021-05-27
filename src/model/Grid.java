@@ -1,3 +1,4 @@
+
 package model;
 
 public class Grid {
@@ -9,10 +10,10 @@ public class Grid {
 	private int row;
 	private int col;
 	private int gridNumber;
-	private String headSnake;
-	private String tailSnake;
-	private String topLadder;
-	private String botLadder;
+	private Grid headSnake;
+	private Grid tailSnake;
+	private Grid topLadder;
+	private Grid botLadder;
 	
 	private String symbolPlayerInGrid;
 	private Player currentPlayer;
@@ -38,26 +39,22 @@ public class Grid {
 	public void currentSymbolPlayers(Player cPlayer) {
 		if(cPlayer!=null) {
 			symbolPlayerInGrid += cPlayer.getSymbol();
-			currentSymbolPlayers(cPlayer.getNextInGrid());
+			currentSymbolPlayers(cPlayer.getnext());
 		}
 	}
 	
 	public void addFirstPlayer(Player playerToAdd) {
 		if(currentPlayer == null) {
 			currentPlayer =  playerToAdd;
+			currentPlayer.setnext(currentPlayer);
+			currentPlayer.setprev(currentPlayer);
 		}else {
-			addMorePlayers(currentPlayer, playerToAdd);
+			currentPlayer.getprev().setnext(playerToAdd);
+			currentPlayer.setprev(playerToAdd);
+			playerToAdd.setnext(currentPlayer);
 		}
 	}
 	
-	private void addMorePlayers(Player current, Player playerToAdd) {
-		if(current.getNextInGrid()==null) {
-			current.setNextInGrid(playerToAdd);
-			playerToAdd.setPrevInGrid(current);
-		}else {
-			addMorePlayers(current.getNextInGrid(), playerToAdd);
-		}
-	}
 	
 	public void deleteAPlayer(Player playerToDelete) {
 		Player youNeedToGetOut;
@@ -188,49 +185,49 @@ public class Grid {
 	public void setCurrentPlayer(Player currentPlayer) {
 		this.currentPlayer = currentPlayer;
 	}
-	
-	
-	public String getHeadSnake() {
+
+	public Grid getHeadSnake() {
 		return headSnake;
 	}
 
 
-	public void setHeadSnake(String headSnake) {
+	public void setHeadSnake(Grid headSnake) {
 		this.headSnake = headSnake;
 	}
 
 
-	public String getTailSnake() {
+	public Grid getTailSnake() {
 		return tailSnake;
 	}
 
 
-	public void setTailSnake(String tailSnake) {
+	public void setTailSnake(Grid tailSnake) {
 		this.tailSnake = tailSnake;
 	}
 
 
-	public String getTopLadder() {
+	public Grid getTopLadder() {
 		return topLadder;
 	}
 
 
-	public void setTopLadder(String topLadder) {
+	public void setTopLadder(Grid topLadder) {
 		this.topLadder = topLadder;
 	}
 
 
-	public String getBotLadder() {
+	public Grid getBotLadder() {
 		return botLadder;
 	}
 
 
-	public void setBotLadder(String botLadder) {
+	public void setBotLadder(Grid botLadder) {
 		this.botLadder = botLadder;
 	}
 
 
 	public String toString() {
-		return "["+gridNumber+" "+getPlayersInGridWithSymbols()+"]";
+		return "["+gridNumber+"]";
 	}
 }
+
