@@ -1,3 +1,4 @@
+
 package model;
 
 public class Score {
@@ -11,10 +12,14 @@ public class Score {
 	private Score right;
 	private Score left;
 
-	public Score(Player player, int score) {
+	
+	public Score(Player player, int score, String parameters, String playersSymbols) {
 		this.player = player;
 		this.score = score;
+		this.parameters = parameters;
+		this.playersSymbols = playersSymbols;
 	}
+
 
 	public Player getPlayer() {
 		return player;
