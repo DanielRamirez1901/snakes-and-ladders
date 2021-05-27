@@ -1,12 +1,9 @@
 package ui;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import model.Board;
-import model.Score;
-
+import model.*;
 public class Menu {
 
     private final static int START = 1;
@@ -63,18 +60,39 @@ public class Menu {
                 switch (option) {
 
                     case START:
-                        System.out.println("\nIngrese los siguientes datos en una sola linea (separados por espacios): "
+                    	System.out.println("A continuacion, presione..."
+                    			+ "\n[1] Si desea agregarle simbolos a los jugadores"
+                    			+ "\n[2] Si desea que el programa le asigne aleatoriamente simbolos a los jugadores");
+                    	int numOption = readOption();
+                        System.out.print("\nIngrese los siguientes datos en una sola linea (separados por espacios): "
                                 + "\n\n*Numero de filas y columnas."
-                                + "\n*Serpientes y escaleras."
-                                + "\n*Numero de jugadores."
-                                + "\n*Symbolos de jugadores (opcional).");
+                                + "\n*Serpientes y escaleras.");
+                        	if(numOption==2) 
+                               System.out.println("\n*Numero de jugadores.");
+                              if(numOption==1) 
+                                System.out.println("\n*Symbolos de jugadores.");
+                               
+                              
                         String data = br.readLine();
                         String[] parts = data.split(" ");
                         if (parts.length == 5) {
-                            initializateGame(parts);
-                            //System.out.println(imprimeTablero);
-                            String turno = br.readLine();
-                            progressToGame(turno);
+                        	if(numOption==1) {
+                        		initializateGame1(parts);
+                        		System.out.println(board);
+                        		String turno = br.readLine();
+                        		System.out.println(board.toStringWithoutNumber());
+                        		System.out.println(board.rollingTheDice());
+                        		String turno2 = br.readLine();
+                        		System.out.println(board.toStringWithoutNumber());
+                        		progressToGame(turno);
+                        	}if(numOption==2) {
+                        		initializateGame2(parts);
+                        		System.out.println(board);
+                        		String turno = br.readLine();
+                        		System.out.println(board.toStringWithoutNumber());
+                        		System.out.println(board.rollingTheDice());
+                        		progressToGame(turno);
+                        	}
                         } else {
                             startProgram();
                         }
@@ -97,17 +115,53 @@ public class Menu {
         }
 
     }
+//                    	System.out.println("A continuacion, presione..."
+//                    			+ "\n[1] Si desea agregarle simbolos a los jugadores"
+//                    			+ "\n[2] Si desea que el programa le asigne aleatoriamente simbolos a los jugadores");
+//                    	int numOption = readOption();
+//                    	if(numOption == 1) {
+//                        System.out.println("\nIngrese los siguientes datos en una sola linea (separados por un espacio): "
+//                                + "\n\n*Numero de filas y columnas."
+//                                + "\n*Serpientes y escaleras."
+//                                + "\n*Symbolos de jugadores (opcional).");
+//                        String data = br.readLine();
+//                        String[] parts = data.split(" ");
+//                        if (parts.length == 5) {
+//                			initializateGame1(parts);
+//                        }
+////                        else{
+////                    		System.out.println("\nIngrese los siguientes datos en una sola linea (separados por un espacio): "
+////                    				+ "\n\n*Numero de filas y columnas."
+////                    				+ "\n*Serpientes y escaleras."
+////                    				+ "\n*Numero de jugadores.");
+////                    		String data2 = br.readLine();
+////                    		String[] parts2 = data2.split(" ");
+////                    		if (parts.length == 5) {
+////                    			initializateGame2(parts2);
+////                    		}
+////                    	}
+       		
+    
 
-    private void initializateGame(String[] parts) {
+    private void initializateGame1(String[] parts) {
         int n = Integer.parseInt(parts[0]);
         int m = Integer.parseInt(parts[1]);
         int snakes = Integer.parseInt(parts[2]);
         int ladders = Integer.parseInt(parts[3]);
-        char[] players = parts[4].toCharArray();
-
-        //matriz = new matriz(n, m, numSnake, numLadders, players);
+        String symbol = parts[4];
+        board.createGameWithPlayersSymbol(n, m, snakes, ladders, symbol);
     }
 
+    private void initializateGame2(String[] parts) {
+        int n = Integer.parseInt(parts[0]);
+        int m = Integer.parseInt(parts[1]);
+        int snakes = Integer.parseInt(parts[2]);
+        int ladders = Integer.parseInt(parts[3]);
+        int amountPlayers = Integer.parseInt(parts[4]);  
+        board.createGameWithAmountPlayers(n, m, snakes, ladders, amountPlayers);
+    }
+    
+   
     public void dataPlayerWinner() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Digita el nombre del ganador: ");
@@ -118,10 +172,10 @@ public class Menu {
     }
 
     private void progressToGame(String input) throws IOException {
-
+    	
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String line;
-
+        
         if (input.equals("")) {
 
             //System.out.println();lanzar dados
@@ -133,7 +187,6 @@ public class Menu {
                 line = br.readLine();
                 progressToGame(line);
             }
-
         } else if (input.equals("num")) {
 
             System.out.println("imprimir tablero");
@@ -155,5 +208,4 @@ public class Menu {
         br.close();
     }
  
-    
 }

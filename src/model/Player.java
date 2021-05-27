@@ -8,6 +8,8 @@ public class Player {
 	private Grid positionInGrid;
 	private Player next;
 	private Player prev;
+	private Player nextInGrid;
+	private Player prevInGrid;
 	private int movementsOfPlayer;
 	
 	
@@ -77,8 +79,23 @@ public class Player {
 	public void setMovementsOfPlayer(int movementsOfPlayer) {
 		this.movementsOfPlayer = movementsOfPlayer;
 	}
-	
-	
 
+	public Player getNextInGrid() {
+		return nextInGrid;
+	}
+
+	public void setNextInGrid(Player nextInGrid) {
+		this.nextInGrid = nextInGrid;
+	}
+
+	public Player getPrevInGrid() {
+		return prevInGrid;
+	}
+
+	public void setPrevInGrid(Player prevInGrid) {
+		this.prevInGrid = prevInGrid;
+	}
+
+	
 }
 

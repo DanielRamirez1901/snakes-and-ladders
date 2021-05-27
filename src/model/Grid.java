@@ -14,7 +14,6 @@ public class Grid {
 	private Grid tailSnake;
 	private Grid topLadder;
 	private Grid botLadder;
-	
 	private String symbolPlayerInGrid;
 	private Player currentPlayer;
 	
@@ -39,22 +38,26 @@ public class Grid {
 	public void currentSymbolPlayers(Player cPlayer) {
 		if(cPlayer!=null) {
 			symbolPlayerInGrid += cPlayer.getSymbol();
-			currentSymbolPlayers(cPlayer.getnext());
+			currentSymbolPlayers(cPlayer.getNextInGrid());
 		}
 	}
 	
 	public void addFirstPlayer(Player playerToAdd) {
 		if(currentPlayer == null) {
 			currentPlayer =  playerToAdd;
-			currentPlayer.setnext(currentPlayer);
-			currentPlayer.setprev(currentPlayer);
 		}else {
-			currentPlayer.getprev().setnext(playerToAdd);
-			currentPlayer.setprev(playerToAdd);
-			playerToAdd.setnext(currentPlayer);
+			addMorePlayers(currentPlayer, playerToAdd);
 		}
 	}
 	
+	private void addMorePlayers(Player current, Player playerToAdd) {
+		if(current.getNextInGrid()==null) {
+			current.setNextInGrid(playerToAdd);
+			playerToAdd.setPrevInGrid(current);
+		}else {
+			addMorePlayers(current.getNextInGrid(), playerToAdd);
+		}
+	}
 	
 	public void deleteAPlayer(Player playerToDelete) {
 		Player youNeedToGetOut;
@@ -227,7 +230,11 @@ public class Grid {
 
 
 	public String toString() {
-		return "["+gridNumber+"]";
+		return "["+gridNumber+" " +getPlayersInGridWithSymbols()+"]";
+	}
+	
+	public String toStringWithoutNumber() {
+		return "["+getPlayersInGridWithSymbols()+"]";
 	}
 }
 

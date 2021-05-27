@@ -23,14 +23,10 @@ public class Board {
 	public void createMatrix(int m, int n) {	
 		numRows = m;
 		numCols = n;
-		System.out.println("filas "+m+" columnas "+n);
-		createRow(m, n, firstGrid);
-		
+		createRow(0, 0, firstGrid);
 	}
 	
 	private void createRow(int i, int j, Grid currentFirstRow) {
-		System.out.println("i "+i+" j "+j+" current "+currentFirstRow);
-
 		createCol(i,j+1,currentFirstRow,currentFirstRow.getUp());
 		if(i+1<numRows) {
 			int num = ((currentFirstRow.getRow()+1)%2!=0) ? ((currentFirstRow.getRow()+2)*numCols):(((currentFirstRow.getRow()+1)*numCols)+1);
@@ -394,7 +390,39 @@ public class Board {
 		return msg;
 	}
 	
+	private String toStringCol(Grid current) {
+		String msg = "";
+		if(current!=null) {
+		msg += current.toString();
+		msg += toStringCol(current.getNext());
+		}
+		return msg;
+	}
+	
+	public String toStringWithoutNumber() {
+		String msg;
+		msg = toStringRowWn(firstGrid);
+		return msg;
+	}
 
+	private String toStringRowWn(Grid firstRow) {
+		String msg = "";
+		if(firstRow!=null) {
+		msg = toStringColWn(firstRow);
+		msg = toStringRowWn(firstRow.getDown())+"\n"+msg;
+		}
+		return msg;
+	}
+	
+	private String toStringColWn(Grid current) {
+		String msg = "";
+		if(current!=null) {
+		msg += current.toStringWithoutNumber();
+		msg += toStringColWn(current.getNext());
+		}
+		return msg;
+	}
+	
 	public Score getRoot() {
 		return root;
 	}
@@ -411,14 +439,7 @@ public class Board {
 		this.gameInitiationParameters = gameInitiationParameters;
 	}
 
-	private String toStringCol(Grid current) {
-		String msg = "";
-		if(current!=null) {
-		msg += current.toString();
-		msg += toStringCol(current.getNext());
-		}
-		return msg;
-	}
+
 	
 	
 }

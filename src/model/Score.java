@@ -1,8 +1,7 @@
 
 package model;
 
-public class Score {
-	
+public class Score {	
 	private Player player;
 	private int score;
 	private String parameters;
@@ -103,4 +102,5 @@ public class Score {
         return dataScore;
     }
 	
+
 }
