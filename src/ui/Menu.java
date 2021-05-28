@@ -161,10 +161,10 @@ public class Menu {
    
     public void dataPlayerWinner() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println(board.showWinnerInformation());
         System.out.println("Digita el nombre del ganador: ");
         String name = br.readLine();
         board.addPlayerScore(name);
-        //savedGames.addPlayerWinner(newGame.getCurrentGame(), nick);
         startProgram();
         br.close();
     }
