@@ -81,8 +81,6 @@ public class Menu {
                         		System.out.println(board);
                         		String turno = br.readLine();
                         		System.out.println(board.toStringWithoutNumber());
-                        		System.out.println(board.rollingTheDice());
-                        		String turno2 = br.readLine();
                         		System.out.println(board.toStringWithoutNumber());
                         		progressToGame(turno);
                         	}if(numOption==2) {
@@ -178,7 +176,8 @@ public class Menu {
         
         if (input.equals("")) {
 
-            //System.out.println();lanzar dados
+    		System.out.println(board.rollingTheDice());
+
 
             if ("ganador" != null) {
                 line = "leave";

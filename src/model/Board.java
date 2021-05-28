@@ -100,7 +100,7 @@ public class Board {
 					//firstGrid.movePlayerInPrev
 				}
 			}
-		}else {
+		}else  {
 				firstGrid.setDown(firstGrid);
 				firstGrid.addFirstPlayer(player);
 				Player temporal = player;
