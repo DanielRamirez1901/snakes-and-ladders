@@ -135,11 +135,6 @@ public class Board {
 		if(playerToCheck.getPositionInGrid().getGridNumber()==(numCols*numRows)) {
 			playerWinner = playerToCheck;
 			addPlayerScore(playerWinner.getNickname());
-//		}else if(playerToCheck.getPositionInGrid().getHeadSnake()!=null) {
-//			playerIsInHead(playerToCheck);
-//		}else if(playerToCheck.getPositionInGrid().getBotLadder()!=null) {
-//			playerIsInBot(playerToCheck);
-//		}
 			}
 	}
 	
@@ -161,10 +156,6 @@ public class Board {
 			Grid actualTailGrid = playerInHead.getPositionInGrid();
 			playerInHead.setPositionInGrid(actualTailGrid.getTailSnake());
 			playerInHead.getPositionInGrid().addFirstPlayer(playerInHead);
-			//			Grid deletePlayerInHead = playerInHead.getPositionInGrid();
-			//			playerInHead.setPositionInGrid(deletePlayerInHead.getHeadSnake());
-			//			deletePlayerInHead.deleteAPlayer(playerInHead);
-			//			No se si implementar esta manera de borrar o la anterior
 		}
 	}
 
@@ -188,9 +179,7 @@ public class Board {
 		playerInBot.getPositionInGrid().addFirstPlayer(playerInBot);
 		}
 	}
-	
-	//mover hacia la parte de arriba de escalera
-	
+		
 	public void addPlayerInBoard(String symbol, int numOfPlayers) {
 		if(numOfPlayers<symbol.length()) {
 			int indexOfPosition = numOfPlayers;
