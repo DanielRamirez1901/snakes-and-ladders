@@ -5,8 +5,7 @@ public class Score {
 	private Player player;
 	private int score;
 	private String parameters;
-	private String playersSymbols;
-	
+	private String playersSymbols;	
 	private Score parent;
 	private Score right;
 	private Score left;

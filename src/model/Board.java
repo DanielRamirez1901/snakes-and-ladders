@@ -6,9 +6,10 @@ import java.util.Random;
 public class Board {
 	private int numRows = 0;
 	private int numCols = 0;
-	Player player;
-	Grid firstGrid;
-	Player firstPlayer;
+	private Player player;
+	private Grid firstGrid;
+	private Player firstPlayer;
+	private Player currentPlayerInGame;
 	private Player playerWinner;
 	private String creationParameters;
 	private Score root;
@@ -54,77 +55,65 @@ public class Board {
 	
 	public void movePlayerToNext(Player player,int steps) {
 		if(steps>0) {
-//			firstGrid.setNext(firstGrid);
-			if(firstGrid.getNext()!=null) {
-				if(firstGrid.getRow()%2!=0) {
-					Player temporal = player;
-					firstGrid.addFirstPlayer(player);
-					Grid gridWithPlayer = firstGrid;
-					gridWithPlayer.setNext(firstGrid);
-					gridWithPlayer.setprev(firstGrid.getNext());
-					firstGrid.deleteAPlayer(temporal);
-					movePlayerToNext(player,steps-1);
-					//firstGrid.moveInSnake
-					//firstGrid.moveInLadder
-					//firstGrid.movePlayerInPrev
+			if(player.getPositionInGrid().getNext()!=null) {
+				if(((int) Math.ceil(player.getPositionInGrid().getGridNumber()/(double)numCols))%2!=0) {
+					player.getPositionInGrid().getNext().addFirstPlayer(player);
+					player.getPositionInGrid().deleteAPlayer(player);
+				}else {
+					player.getPositionInGrid().getprev().addFirstPlayer(player);
+					player.getPositionInGrid().deleteAPlayer(player);
 				}
+			}else if(player.getPositionInGrid().getDown()!=null){
+				player.getPositionInGrid().getDown().addFirstPlayer(player);
+				player.getPositionInGrid().deleteAPlayer(player);
 			}
-		}else {
-				firstGrid.setDown(firstGrid);
-				Player temporal = player;
-				firstGrid.addFirstPlayer(player);
-				if(firstGrid.getRow()%2==0) {
-					Grid temporalGrid =  firstGrid;
-					firstGrid.setUp(temporalGrid);
-					movePlayerToPrev(player, steps);
-					temporalGrid.deleteAPlayer(temporal);
-				}
-			}
+			movePlayerToNext(player,(steps-1));
 		}
-	
-	
-	public void movePlayerToPrev(Player player, int steps) {
-		if(steps>0) {
-//			firstGrid.setprev(firstGrid);
-			if(firstGrid.getprev()!=null) {
-				if(firstGrid.getRow()%2==0) {
-					Player temporal = player;
-					Grid gridWithPlayer = firstGrid;
-					firstGrid.addFirstPlayer(player);
-					gridWithPlayer.setprev(firstGrid);
-					firstGrid.deleteAPlayer(temporal);
-					//firstGrid.moveInSnake
-					//firstGrid.moveInLadderelse 
-					movePlayerToPrev(player,steps-1);
-				
-					//firstGrid.movePlayerInPrev
-				}
-			}
-		}else  {
-				firstGrid.setDown(firstGrid);
-				firstGrid.addFirstPlayer(player);
-				Player temporal = player;
-				if(firstGrid.getRow()%2!=0) {
-					Grid temporalGrid = firstGrid;
-					firstGrid.setUp(temporalGrid);
-					movePlayerToNext(player, steps);
-					temporalGrid.deleteAPlayer(temporal);
-				}
-			}
-		}
+	}
+
+//
+//	public void movePlayerToPrev(Player player, int steps) {
+//		if(steps>0) {
+//			//			firstGrid.setprev(firstGrid);
+//			if(firstGrid.getprev()!=null) {
+//				if(firstGrid.getRow()%2==0) {
+//					Player temporal = player;
+//					Grid gridWithPlayer = firstGrid;
+//					firstGrid.addFirstPlayer(player);
+//					gridWithPlayer.setprev(firstGrid);
+//					firstGrid.deleteAPlayer(temporal);
+//					//firstGrid.moveInSnake
+//					//firstGrid.moveInLadderelse 
+//					movePlayerToPrev(player,steps-1);
+//
+//					//firstGrid.movePlayerInPrev
+//				}
+//			}
+//		}else  {
+//			firstGrid.setDown(firstGrid);
+//			firstGrid.addFirstPlayer(player);
+//			Player temporal = player;
+//			if(firstGrid.getRow()%2!=0) {
+//				Grid temporalGrid = firstGrid;
+//				firstGrid.setUp(temporalGrid);
+//				movePlayerToNext(player, steps);
+//				temporalGrid.deleteAPlayer(temporal);
+//			}
+//		}
+//	}
 	
 	public String rollingTheDice() {
 		String msgWithInfo =  "";
 		int generateSteps=(int)(Math.random()*6+1);
-		msgWithInfo = "El jugador "+firstPlayer.getSymbol() + " acaba de lanzar el dado y su puntaje fue de: "+generateSteps;
-			if((firstPlayer.getNumberOfPosition()+generateSteps)<=(numCols*numRows)) {
-				movePlayer(firstPlayer.getSymbol(), generateSteps);
-				firstPlayer.setMovementsOfPlayer(firstPlayer.getNumberOfPosition()+generateSteps);
+		msgWithInfo = "El jugador "+currentPlayerInGame.getSymbol() + " acaba de lanzar el dado y su puntaje fue de: "+generateSteps;
+			if((currentPlayerInGame.getNumberOfPosition()+generateSteps)<=(numCols*numRows)) {
+				movePlayer(currentPlayerInGame.getSymbol(), generateSteps);
+				currentPlayerInGame.setMovementsOfPlayer(currentPlayerInGame.getNumberOfPosition()+generateSteps);
 			}else {
 				msgWithInfo += "\n Es imposible para el jugador moverse debido a que necesita un puntaje"
-						+ "mejor o igual a: "+((numCols*numRows)-firstPlayer.getMovementsOfPlayer());
+						+ "mejor o igual a: "+((numCols*numRows)-currentPlayerInGame.getMovementsOfPlayer());
 			}
-			firstPlayer.getnext();
+			currentPlayerInGame = currentPlayerInGame.getnext();
 			return msgWithInfo;
 	}
 	
@@ -217,6 +206,7 @@ public class Board {
 			firstPlayer.setnext(firstPlayer);
 			firstPlayer.setprev(firstPlayer);
 			firstGrid.addFirstPlayer(firstPlayer);
+			currentPlayerInGame = firstPlayer;
 		}else {
 			 Player playerToAdd = new Player(symbol, firstGrid);
 			 firstPlayer.getprev().setnext(playerToAdd);
@@ -258,10 +248,9 @@ public class Board {
 		//generateLadders(ladders);
 		addPlayerInBoard(creationPlayersWithSymbol, 0 );
 	} 
-
 	
 	public void createHeadSnake(int numberOfSnakes) {
-		if(numberOfSnakes<0) {
+		if(numberOfSnakes<0) {		
 		Random randomSymbol = new Random();
 		char symbol = (char)(randomSymbol.nextInt(26) + 'A');
 		String chartToString = String.valueOf(symbol);
@@ -430,6 +419,14 @@ public class Board {
 
 	public void setRoot(Score root) {
 		this.root = root;
+	}
+
+	public Player getCurrentPlayerInGame() {
+		return currentPlayerInGame;
+	}
+
+	public void setCurrentPlayerInGame(Player currentPlayerInGame) {
+		this.currentPlayerInGame = currentPlayerInGame;
 	}
 
 	public String getGameInitiationParameters() {

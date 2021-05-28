@@ -46,16 +46,17 @@ public class Grid {
 		if(currentPlayer == null) {
 			currentPlayer =  playerToAdd;
 		}else {
-			addMorePlayers(currentPlayer, playerToAdd);
+			addMorePlayers(currentPlayer.getNextInGrid(), playerToAdd, currentPlayer);
 		}
 	}
 	
-	private void addMorePlayers(Player current, Player playerToAdd) {
-		if(current.getNextInGrid()==null) {
-			current.setNextInGrid(playerToAdd);
-			playerToAdd.setPrevInGrid(current);
+	private void addMorePlayers(Player current, Player playerToAdd, Player prevPlayer) {
+		if(current == null) {
+			current = playerToAdd;
+			current.setprev(prevPlayer);
+			prevPlayer.setnext(current);
 		}else {
-			addMorePlayers(current.getNextInGrid(), playerToAdd);
+			addMorePlayers(current.getNextInGrid(), playerToAdd, current);
 		}
 	}
 	

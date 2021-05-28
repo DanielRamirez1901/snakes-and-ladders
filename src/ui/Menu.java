@@ -14,7 +14,7 @@ public class Menu {
 
     private BufferedReader br;
 
-    Board board;
+    private Board board;
 
     public Menu() {
         br = new BufferedReader(new InputStreamReader(System.in));
@@ -80,7 +80,6 @@ public class Menu {
                         		initializateGame1(parts);
                         		System.out.println(board);
                         		String turno = br.readLine();
-                        		System.out.println(board.toStringWithoutNumber());
                         		System.out.println(board.toStringWithoutNumber());
                         		progressToGame(turno);
                         	}if(numOption==2) {
@@ -164,6 +163,7 @@ public class Menu {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Digita el nombre del ganador: ");
         String name = br.readLine();
+        board.addPlayerScore(name);
         //savedGames.addPlayerWinner(newGame.getCurrentGame(), nick);
         startProgram();
         br.close();
@@ -177,9 +177,9 @@ public class Menu {
         if (input.equals("")) {
 
     		System.out.println(board.rollingTheDice());
+    		System.out.println(board.toStringWithoutNumber());
 
-
-            if ("ganador" != null) {
+            if (board.getPlayerWinner() != null) {
                 line = "leave";
                 progressToGame(line);
             } else {
@@ -188,13 +188,14 @@ public class Menu {
             }
         } else if (input.equals("num")) {
 
-            System.out.println("imprimir tablero");
+    		System.out.println(board);
             line = br.readLine();
             progressToGame(line);
 
         } else if (input.equals("simul")) {
 
-            //
+        	System.out.println(board.rollingTheDice());
+    		System.out.println(board.toStringWithoutNumber());
 
         } else if (input.equals("menu")) {
 
