@@ -54,13 +54,14 @@ public class Board {
 	
 	public void movePlayerToNext(Player player,int steps) {
 		if(steps>0) {
-			firstGrid.setNext(firstGrid);
+//			firstGrid.setNext(firstGrid);
 			if(firstGrid.getNext()!=null) {
 				if(firstGrid.getRow()%2!=0) {
 					Player temporal = player;
-					Grid gridWithPlayer = firstGrid;
 					firstGrid.addFirstPlayer(player);
+					Grid gridWithPlayer = firstGrid;
 					gridWithPlayer.setNext(firstGrid);
+					gridWithPlayer.setprev(firstGrid.getNext());
 					firstGrid.deleteAPlayer(temporal);
 					movePlayerToNext(player,steps-1);
 					//firstGrid.moveInSnake
@@ -68,15 +69,15 @@ public class Board {
 					//firstGrid.movePlayerInPrev
 				}
 			}
-		}else if(firstGrid.getNext()==null) {
+		}else {
 				firstGrid.setDown(firstGrid);
 				Player temporal = player;
 				firstGrid.addFirstPlayer(player);
 				if(firstGrid.getRow()%2==0) {
 					Grid temporalGrid =  firstGrid;
 					firstGrid.setUp(temporalGrid);
-					temporalGrid.deleteAPlayer(temporal);
 					movePlayerToPrev(player, steps);
+					temporalGrid.deleteAPlayer(temporal);
 				}
 			}
 		}
@@ -84,7 +85,7 @@ public class Board {
 	
 	public void movePlayerToPrev(Player player, int steps) {
 		if(steps>0) {
-			firstGrid.setprev(firstGrid);
+//			firstGrid.setprev(firstGrid);
 			if(firstGrid.getprev()!=null) {
 				if(firstGrid.getRow()%2==0) {
 					Player temporal = player;
@@ -99,15 +100,15 @@ public class Board {
 					//firstGrid.movePlayerInPrev
 				}
 			}
-		}else if(firstGrid.getNext()==null) {
+		}else {
 				firstGrid.setDown(firstGrid);
 				firstGrid.addFirstPlayer(player);
 				Player temporal = player;
 				if(firstGrid.getRow()%2!=0) {
 					Grid temporalGrid = firstGrid;
 					firstGrid.setUp(temporalGrid);
-					temporalGrid.deleteAPlayer(temporal);
 					movePlayerToNext(player, steps);
+					temporalGrid.deleteAPlayer(temporal);
 				}
 			}
 		}

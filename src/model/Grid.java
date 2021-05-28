@@ -62,29 +62,29 @@ public class Grid {
 	public void deleteAPlayer(Player playerToDelete) {
 		Player youNeedToGetOut;
 		if(currentPlayer == playerToDelete) {	
-			currentPlayer = currentPlayer.getnext();
+			currentPlayer = currentPlayer.getNextInGrid();
 			}if(currentPlayer!=null) {
 			youNeedToGetOut = playerToDelete;
-			youNeedToGetOut.setnext(null);
+			youNeedToGetOut.setNextInGrid(null);
 		}else if (currentPlayer!=null) {
-			deleteAPlayer(currentPlayer.getnext(),playerToDelete);
+			deleteAPlayer(currentPlayer.getNextInGrid(),playerToDelete);
 		}
 	}
 	
 	private void deleteAPlayer(Player actual, Player playerToDelete) {
 		if(actual == playerToDelete) {
 			Player tempPlayerToRemove = actual;
-			Player newNextPlayer = actual.getnext();
-			Player newPrevPlayer = actual.getprev();
-			newPrevPlayer.setnext(actual.getnext());
+			Player newNextPlayer = actual.getNextInGrid();
+			Player newPrevPlayer = actual.getPrevInGrid();
+			newPrevPlayer.setnext(actual.getNextInGrid());
 			if(newNextPlayer!=null) {
-				newNextPlayer.setprev(actual.getprev());
+				newNextPlayer.setNextInGrid(actual.getprev());
 			}
-			tempPlayerToRemove.setprev(null);
-			tempPlayerToRemove.setnext(null);
+			tempPlayerToRemove.setPrevInGrid(null);
+			tempPlayerToRemove.setNextInGrid(null);
 		}
 		else {
-			deleteAPlayer(actual.getnext(),playerToDelete);
+			deleteAPlayer(actual.getNextInGrid(),playerToDelete);
 		}	
 	}
 
