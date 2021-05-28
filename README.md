@@ -5,7 +5,9 @@ This project allows you to play the game called snakes and ladders. Its playabil
 
 ## 2.Documentation
 In this link you will find the document that contains the functional requirements of the project and also the class diagram of this project, all in a pdf file:
-[File with Documentation](https://github.com/DanielRamirez1901/snakes-and-ladders/blob/main/docs/Requerimientos%20funcionales.docx)
+[File with Documentation](https://github.com/DanielRamirez1901/snakes-and-ladders/blob/main/docs/Requerimientos_funcionales.pdf)
+In this link you will find the document thath contains the changelog
+[File with changelog](https://github.com/DanielRamirez1901/snakes-and-ladders/blob/main/docs/Changelog.pdf)
 
 ## 3.Contributors
 * Daniel Ramirez Gomez. [GitHub profile.](https://github.com/DanielRamirez1901 "GitHub profile.")
