@@ -1,7 +1,7 @@
 
 package model;
 
-import java.util.Random;
+
 
 public class Board {
 	private int numRows = 0;
@@ -32,7 +32,7 @@ public class Board {
 		if(i+1<numRows) {
 			int num = ((currentFirstRow.getRow()+1)%2!=0) ? ((currentFirstRow.getRow()+2)*numCols):(((currentFirstRow.getRow()+1)*numCols)+1);
 			Grid downFirstRow = new Grid(i+1,j,num);
-			downFirstRow.setUp(currentFirstRow);
+			downFirstRow.setUp(currentFirstRow)	;
 			currentFirstRow.setDown(downFirstRow);
 			createRow(i+1,j,downFirstRow);
 		}
@@ -56,7 +56,7 @@ public class Board {
 	public void movePlayerToNext(Player player,int steps) {
 		if(steps>0) {
 			if(player.getPositionInGrid().getNext()!=null) {
-				if(((int) Math.ceil(player.getPositionInGrid().getGridNumber()/(double)numCols))%2!=0) {
+				if(player.getPositionInGrid().getRow()%2!=0) {
 					player.getPositionInGrid().getNext().addFirstPlayer(player);
 					player.getPositionInGrid().deleteAPlayer(player);
 				}else {
