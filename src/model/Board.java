@@ -111,7 +111,7 @@ public class Board {
 				currentPlayerInGame.setMovementsOfPlayer(currentPlayerInGame.getNumberOfPosition()+generateSteps);
 			}else {
 				msgWithInfo += "\n Es imposible para el jugador moverse debido a que necesita un puntaje"
-						+ "mejor o igual a: "+((numCols*numRows)-currentPlayerInGame.getMovementsOfPlayer());
+						+ "menor o igual a: "+((numCols*numRows)-currentPlayerInGame.getMovementsOfPlayer());
 			}
 			currentPlayerInGame = currentPlayerInGame.getnext();
 			return msgWithInfo;
@@ -119,10 +119,12 @@ public class Board {
 	
 	public void movePlayer(String symbol, int steps) {
 		Player playerToMove = searchSymbolPlayer(symbol, firstPlayer);
-		movePlayerToNext(playerToMove, steps);
-		checkPlayerPosition(playerToMove);
+		if(searchSymbolPlayer(symbol, playerToMove)!=null) {
+			movePlayerToNext(playerToMove, steps);
+			checkPlayerPosition(playerToMove);
+		}
 	}
-	
+
 	private Player searchSymbolPlayer(String symbol, Player currentPlayerToSearch) {
 		if(currentPlayerToSearch.getSymbol().equalsIgnoreCase(symbol)) {
 			return currentPlayerToSearch;//You Fount that player
@@ -138,47 +140,47 @@ public class Board {
 			}
 	}
 	
-	public boolean playerIsInHead(Player current) {
-		boolean playerIsInHeadSnake = false;
-		if(current!=null) {
-			Grid actualGrid = current.getPositionInGrid();
-			current.setPositionInGrid(actualGrid.getHeadSnake());
-			current.getPositionInGrid().addFirstPlayer(current);
-			playerIsInHeadSnake=true;
-			movePlayerToTail(current);
-			actualGrid.deleteAPlayer(current);
-		}
-		return playerIsInHeadSnake;
-	}
+//	public boolean playerIsInHead(Player current) {
+//		boolean playerIsInHeadSnake = false;
+//		if(current!=null) {
+//			Grid actualGrid = current.getPositionInGrid();
+//			current.setPositionInGrid(actualGrid.getHeadSnake());
+//			current.getPositionInGrid().addFirstPlayer(current);
+//			playerIsInHeadSnake=true;
+//			movePlayerToTail(current);
+//			actualGrid.deleteAPlayer(current);
+//		}
+//		return playerIsInHeadSnake;
+//	}
+//
+//	private void movePlayerToTail(Player playerInHead) {
+//		if(playerIsInHead(playerInHead)!=false) {
+//			Grid actualTailGrid = playerInHead.getPositionInGrid();
+//			playerInHead.setPositionInGrid(actualTailGrid.getTailSnake());
+//			playerInHead.getPositionInGrid().addFirstPlayer(playerInHead);
+//		}
+//	}
 
-	private void movePlayerToTail(Player playerInHead) {
-		if(playerIsInHead(playerInHead)!=false) {
-			Grid actualTailGrid = playerInHead.getPositionInGrid();
-			playerInHead.setPositionInGrid(actualTailGrid.getTailSnake());
-			playerInHead.getPositionInGrid().addFirstPlayer(playerInHead);
-		}
-	}
-
-	public boolean playerIsInBot(Player current) {
-		boolean playerIsInBot = false;
-		if(current!=null) {
-		Grid actualBotGrid = current.getPositionInGrid();
-		current.setPositionInGrid(actualBotGrid.getBotLadder());
-		current.getPositionInGrid().addFirstPlayer(current);
-		playerIsInBot=true;
-		movePlayerToTop(current);
-		actualBotGrid.deleteAPlayer(current);
-		}
-		return playerIsInBot;
-	}
-	
-	public void movePlayerToTop(Player playerInBot) {
-		if(playerIsInBot(playerInBot)!=false) {
-		Grid actualTopGrid = playerInBot.getPositionInGrid();
-		playerInBot.setPositionInGrid(actualTopGrid.getTopLadder());
-		playerInBot.getPositionInGrid().addFirstPlayer(playerInBot);
-		}
-	}
+//	public boolean playerIsInBot(Player current) {
+//		boolean playerIsInBot = false;
+//		if(current!=null) {
+//		Grid actualBotGrid = current.getPositionInGrid();
+//		current.setPositionInGrid(actualBotGrid.getBotLadder());
+//		current.getPositionInGrid().addFirstPlayer(current);
+//		playerIsInBot=true;
+//		movePlayerToTop(current);
+//		actualBotGrid.deleteAPlayer(current);
+//		}
+//		return playerIsInBot;
+//	}
+//	
+//	public void movePlayerToTop(Player playerInBot) {
+//		if(playerIsInBot(playerInBot)!=false) {
+//		Grid actualTopGrid = playerInBot.getPositionInGrid();
+//		playerInBot.setPositionInGrid(actualTopGrid.getTopLadder());
+//		playerInBot.getPositionInGrid().addFirstPlayer(playerInBot);
+//		}
+//	}
 		
 	public void addPlayerInBoard(String symbol, int numOfPlayers) {
 		if(numOfPlayers<symbol.length()) {
@@ -200,8 +202,6 @@ public class Board {
 			 Player playerToAdd = new Player(symbol, firstGrid);
 			 firstPlayer.getprev().setnext(playerToAdd);
 			 playerToAdd.setprev(firstPlayer.getprev());
-			 firstPlayer.setprev(playerToAdd);
-			 playerToAdd.setnext(firstPlayer);
 			 firstGrid.addFirstPlayer(playerToAdd);
 		}
 	}
@@ -237,37 +237,37 @@ public class Board {
 		//generateLadders(ladders);
 		addPlayerInBoard(creationPlayersWithSymbol, 0 );
 	} 
-	
-	public void createHeadSnake(int numberOfSnakes) {
-		if(numberOfSnakes<0) {		
-		Random randomSymbol = new Random();
-		char symbol = (char)(randomSymbol.nextInt(26) + 'A');
-		String chartToString = String.valueOf(symbol);
-		int headPositionInRow = (int) Math.floor(Math.random()*(1-numRows+1)+numRows);
-		int headPositionInCol = (int) Math.floor(Math.random()*(2-numCols+1)+numCols);
-		int numberInGrid =  generateRandomPosition(1);
-			if(numberOfSnakes<(numCols*numRows)) {
-				Grid headSnake = new Grid(headPositionInRow,headPositionInCol,numberInGrid);
-				headSnake.setSymbolPlayerInGrid(chartToString);
-			}
-		}else {
-			createHeadSnake(numberOfSnakes-1);
-		}
-	}
-	
-	public int generateRandomPosition(int numberOfPosition) {
-		numberOfPosition = (int) Math.floor(Math.random()*(1-(numCols*numRows)+1)+(numCols*numRows));
-		if(numberOfPosition!=getFirstGrid().getGridNumber()) {
-			if(numberOfPosition>numCols) {
-				if(numberOfPosition<(numCols*numRows)) {
-					return numberOfPosition;
-				}
-			}
-		}else {		
-			return generateRandomPosition(numberOfPosition);
-		}
-		return numberOfPosition;
-	}
+//	
+//	public void createHeadSnake(int numberOfSnakes) {
+//		if(numberOfSnakes<0) {		
+//		Random randomSymbol = new Random();
+//		char symbol = (char)(randomSymbol.nextInt(26) + 'A');
+//		String chartToString = String.valueOf(symbol);
+//		int headPositionInRow = (int) Math.floor(Math.random()*(1-numRows+1)+numRows);
+//		int headPositionInCol = (int) Math.floor(Math.random()*(2-numCols+1)+numCols);
+//		int numberInGrid =  generateRandomPosition(1);
+//			if(numberOfSnakes<(numCols*numRows)) {
+//				Grid headSnake = new Grid(headPositionInRow,headPositionInCol,numberInGrid);
+//				headSnake.setSymbolPlayerInGrid(chartToString);
+//			}
+//		}else {
+//			createHeadSnake(numberOfSnakes-1);
+//		}
+//	}
+//	
+//	public int generateRandomPosition(int numberOfPosition) {
+//		numberOfPosition = (int) Math.floor(Math.random()*(1-(numCols*numRows)+1)+(numCols*numRows));
+//		if(numberOfPosition!=getFirstGrid().getGridNumber()) {
+//			if(numberOfPosition>numCols) {
+//				if(numberOfPosition<(numCols*numRows)) {
+//					return numberOfPosition;
+//				}
+//			}
+//		}else {		
+//			return generateRandomPosition(numberOfPosition);
+//		}
+//		return numberOfPosition;
+//	}
 	
 	public void addPlayerScore(String nameOfPlayer) {
 		playerWinner.setNickname(nameOfPlayer);
@@ -281,14 +281,18 @@ public class Board {
 	}
 	
 	public void addPlayerScore(Score currentPlayer, Score playerToAdd) {
-		if(currentPlayer.getRight()==null) {
-			currentPlayer.setRight(playerToAdd);
-		}else {
-			addPlayerScore(currentPlayer.getRight(), playerToAdd);
-		}if(currentPlayer.getLeft()!=null) {
-			currentPlayer.setLeft(playerToAdd);
-		}else {
-			addPlayerScore(currentPlayer.getLeft(),playerToAdd);
+		if(currentPlayer.getScore()<playerToAdd.getScore()) {
+			if(currentPlayer.getRight()==null) {
+				currentPlayer.setRight(playerToAdd);
+			}else {
+				addPlayerScore(currentPlayer.getRight(),playerToAdd);
+			}
+		}if(currentPlayer.getScore()>playerToAdd.getScore()) {
+			if(currentPlayer.getLeft()==null) {
+				currentPlayer.setLeft(playerToAdd);
+			}else {
+				addPlayerScore(currentPlayer.getLeft(),playerToAdd);
+			}
 		}
 	}
 
@@ -363,8 +367,8 @@ public class Board {
 	private String toStringRow(Grid firstRow) {
 		String msg = "";
 		if(firstRow!=null) {
-		msg = toStringCol(firstRow);
-		msg = toStringRow(firstRow.getDown())+"\n"+msg;
+			msg = toStringCol(firstRow);
+			msg = toStringRow(firstRow.getDown())+"\n"+msg;
 		}
 		return msg;
 	}
@@ -372,8 +376,8 @@ public class Board {
 	private String toStringCol(Grid current) {
 		String msg = "";
 		if(current!=null) {
-		msg += current.toString();
-		msg += toStringCol(current.getNext());
+			msg += current.toString();
+			msg += toStringCol(current.getNext());
 		}
 		return msg;
 	}

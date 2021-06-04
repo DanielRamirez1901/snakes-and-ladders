@@ -64,9 +64,10 @@ public class Grid {
 		Player youNeedToGetOut;
 		if(currentPlayer == playerToDelete) {	
 			currentPlayer = currentPlayer.getNextInGrid();
-			}if(currentPlayer!=null) {
+			if(currentPlayer!=null) {
 			youNeedToGetOut = playerToDelete;
 			youNeedToGetOut.setNextInGrid(null);
+			}
 		}else if (currentPlayer!=null) {
 			deleteAPlayer(currentPlayer.getNextInGrid(),playerToDelete);
 		}
@@ -79,7 +80,7 @@ public class Grid {
 			Player newPrevPlayer = actual.getPrevInGrid();
 			newPrevPlayer.setnext(actual.getNextInGrid());
 			if(newNextPlayer!=null) {
-				newNextPlayer.setNextInGrid(actual.getprev());
+				newNextPlayer.setPrevInGrid(actual.getprev());
 			}
 			tempPlayerToRemove.setPrevInGrid(null);
 			tempPlayerToRemove.setNextInGrid(null);
